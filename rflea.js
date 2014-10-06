@@ -19,6 +19,8 @@ function theMagic(data) {
 	//in case you want to distiguish between new and re-sent packages, you should add a counter in some of the data fields
 	// from your rFlea Arduino code.
 	
+	//data.message -> array containing the 8 fields of data sent from the rFlea
+	//data.MAC -> array containing 2 hex numbers with the ID of the rFlea. In case we are paired, it is the same as rFleaMAC.
 	
 	
 	
@@ -67,17 +69,17 @@ function onSearching() {
 function parseRflea(data) {
 	var data = data.split(",");
 	return {
-		analogIn: [
+		message: [
 			parseInt(data[0]),
-			parseInt(data[1])
-		],
-		digitalIn: [
+			parseInt(data[1]),
 			parseInt(data[2]),
 			parseInt(data[3]),
 			parseInt(data[4]),
-			parseInt(data[5])
+			parseInt(data[5]),
+			parseInt(data[6]),
+			parseInt(data[7])
 		],
-		MAC: "rFlea " + toHex(data[8]) + ":" +toHex(data[9]),
+		MAC: toHex(data[8]) + ":" +toHex(data[9]),
 	};
 }
 
@@ -95,11 +97,8 @@ function toString(a,b,c,d,e,f,g,h){
 
 function outputData(data) {
 	var output = "Data package #" + packagesReceived + " received from rFlea #" + rFleaMAC + ": <br/>";
-	for (var i = 0; i < data.analogIn.length; i++) {
-		output += "Analog" + i + ": " + data.analogIn[i] + "<br/>";
-	}
-	for (var i = 0; i < data.digitalIn.length; i++) {
-		output += "Digital" + i + ": " + data.digitalIn[i] + "<br/>";
+	for (var i = 0; i < data.message.length; i++) {
+		output += "data" + i + ": " + data.message[i] + "<br/>";
 	}
 
 	$("#rFlea").html(output);
