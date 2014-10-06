@@ -13,7 +13,16 @@ var rFleaMAC = 47740, // enter your rFlea MAC address here (e.g. 47740)
 ///////////////////////////////////////////////////////////////////////////////
 
 function theMagic(data) {
-	// put your code here
+	// put your code here. This function will work as a synch, once connected to an rFlea, this funciton will be called
+	// every time an rFlea send a package, this will happen depending your frequency parameter. Even when rFlea has no new
+	// data to send, you should know that it will keep sending the last package, so the sync is not lost. Remember that,
+	//in case you want to distiguish between new and re-sent packages, you should add a counter in some of the data fields
+	// from your rFlea Arduino code.
+	
+	
+	
+	
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////
