@@ -12,5 +12,33 @@
 		<div id="rFlea">
 			Trying to connect…
 		</div>
+		<script type="text/javascript">
+		//rflea rFlea;
+		/**
+		 * onrFleaMessage Function that is called whenever new rFlea data messages are received.
+		 *		You can use this function to send you date back to rFlea. rFeaSend().
+		 * 				  It accepts one parameters:
+		 * @param  {rFlea} 	rFleaData.message[] array of size 8 with the 8 data fields
+		 *					rFleaData.MAC[] array of size 2 with the unique ID of the connected rFlea
+		 */
+		function onrFleaMessage(rFleaData){
+		outputData(rFleaData);
+
+		//Now is time to send our DATA. Fill each of the fields with your data. Values form 0 to 255!
+		rFleaSend(1,1,2,3,4,5,6,7); //returns true if format is correct
+		};
+		
+		//Functions that writes in the html plain text the data
+		function outputData(data) {
+				var output = "Data package #" + packagesReceived + " received from rFlea #" + rFleaMAC + ": <br/>";
+				for (var i = 0; i < data.message.length; i++) {
+				output += "data" + i + ": " + data.message[i] + "<br/>";
+			}
+			$("#rFlea").html(output);
+		}
+		
+		
+		
+		</script>
 	</body>
 </html>

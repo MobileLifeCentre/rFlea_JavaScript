@@ -26,6 +26,15 @@ function theMagic(data) {
 	
 	
 }
+/**
+ * Override in your app to receive "range" messages, e.g. sb.onRangeMessage = yourRangeFunction
+ * @param  {String} name  Name of incoming route
+ * @param  {Number} value The data being provided
+ * @memberOf Spacebrew.Client
+ * @public
+ */
+onrFleaMessage = function( rFleaData ){};
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP
@@ -45,16 +54,13 @@ if (debug) AndroidInterface.showToast("Ant connected " + antConnected);
 ///////////////////////////////////////////////////////////////////////////////
 function onMessage(data) {
 	packagesReceived++;
+	
 	var rFleaData = parseRflea(data);
-
-	outputData(rFleaData);
+	
+	this.onrFleaMessage(rFleaData);
 
 	//user code
 	theMagic(rFleaData);
-
-	var tx_message = toString(LED_value,1,2,3,4,5,6,7);
-	var tx_successful = AntInterface.send(tx_message); //returns true if format is correct
-	if (debug && verbose) AndroidInterface.showToast(tx_message, tx_successful);
 }
 
 function onPaired() {
@@ -94,15 +100,12 @@ function toHex(val) {
 	return result;
 }
 
-function toString(a,b,c,d,e,f,g,h){
-	return (a+":"+b+":"+c+":"+d+":"+e+":"+f+":"+g+":"+h);
+function rFleaSend(data0,data1,data2,data3,data4,data5,data6,data7){
+	var tx_message = toString(data0,data1,data2,data3,data4,data5,data6,data7);
+	var tx_successful = AntInterface.send(tx_message); //returns true if format is correct
+	if (true) AndroidInterface.showToast(tx_message, tx_successful);
 }
 
-function outputData(data) {
-	var output = "Data package #" + packagesReceived + " received from rFlea #" + rFleaMAC + ": <br/>";
-	for (var i = 0; i < data.message.length; i++) {
-		output += "data" + i + ": " + data.message[i] + "<br/>";
-	}
-
-	$("#rFlea").html(output);
+function toString(a,b,c,d,e,f,g,h){
+	return (a+":"+b+":"+c+":"+d+":"+e+":"+f+":"+g+":"+h);
 }
