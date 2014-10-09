@@ -2,9 +2,9 @@
 // GLOBAL SETTINGS
 ///////////////////////////////////////////////////////////////////////////////
 
-var rFleaMAC = 47740, // enter your rFlea MAC address here (e.g. 47740)
-    frequency = 32, // use higher frequency for better response. Standard is 4, higher frequencies use more batteries
-    debug = true, // outputs debug messages on the phone. Set to true if something doesn't work out
+var rFleaMAC = 0, // enter your rFlea MAC address here if you want to pair to a specific one(e.g. 47740). Set to 0 for connecting to any in vicinity.
+    frequency = 8, // use higher frequency for better response. Default value is 8, higher frequencies use more batteries
+    debug = false, // outputs debug messages on the phone. Set to true if something doesn't work out
     verbose = false, // outputs even more debug messages (use with care!)
     showData = true; // outputs the data received from rFlea on the phone screen. All you need is a div with the ID "rFlea" in your html
 
@@ -31,7 +31,11 @@ function theMagic(data) {
 // SETUP
 ///////////////////////////////////////////////////////////////////////////////
 
-var antConnected = AntInterface.addNewChannel(false, rFleaMAC, frequency); //false means we are opening a Slave master
+var antConnected=false;
+
+while (antConnected==false){//try 3 times until get connection. 
+antConnected = AntInterface.addNewChannel(false, rFleaMAC, frequency); //false means we are opening a Slave master
+}
 var packagesReceived = 0; //counter
 
 if (debug) AndroidInterface.showToast("Ant connected " + antConnected);
@@ -39,7 +43,6 @@ if (debug) AndroidInterface.showToast("Ant connected " + antConnected);
 ///////////////////////////////////////////////////////////////////////////////
 // ANT MESSAGE HANDLING
 ///////////////////////////////////////////////////////////////////////////////
-
 function onMessage(data) {
 	packagesReceived++;
 	var rFleaData = parseRflea(data);
