@@ -51,14 +51,14 @@ while (AntInterface.isAntReady()==false){//try 3 times until get connection.
 
 ChannelConnected = AntInterface.addNewChannel(false, rFleaMAC1, frequency1); //false means we are opening a Slave master
 if(ChannelConnected==true)
-	AndroidInterface.showToast("rFlea with ID "+rFleaMAC1+" is set up");
+	AndroidInterface.showToast("rFlea with ID "+rFleaMAC1+" is set up. Searching...");
 else
 	AndroidInterface.showToast("rFlea with ID "+rFleaMAC1+" could not be set up");
 
 		//Connect to as much rFlea as you wish (MAXIMUM 8)
 //ChannelConnected=AntInterface.addNewChannel(false, rFleaMAC2, frequency2); //open a second channel
 //if(ChannelConnected==true)
-	//AndroidInterface.showToast("rFlea with ID "+rFleaMAC2+" is set up");
+	//AndroidInterface.showToast("rFlea with ID "+rFleaMAC2+" is set up. Searching...");
 //else
 	//AndroidInterface.showToast("rFlea with ID "+rFleaMAC2+" could not be set up");
 
