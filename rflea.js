@@ -42,14 +42,26 @@ onrFleaMessage = function( rFleaData ){};
 // SETUP
 ///////////////////////////////////////////////////////////////////////////////
 
-var antConnected=false;
+var ChannelConnected=false;
 
-while (antConnected==false){//try 3 times until get connection. 
-antConnected = AntInterface.addNewChannel(false, rFleaMAC1, frequency); //false means we are opening a Slave master
+while (AntInterface.isAntReady()==false){//try 3 times until get connection. 
+   
 }
 
-//Connect to as much rFlea as you wish (MAXIMUM 8)
-AntInterface.addNewChannel(false, rFleaMAC2, frequency); //open a second channel
+ChannelConnected = AntInterface.addNewChannel(false, rFleaMAC1, frequency); //false means we are opening a Slave master
+if(ChannelConnected==true)
+	AndroidInterface.showToast("rFlea with ID "+rFleaMAC1+" is set up");
+else
+	AndroidInterface.showToast("rFlea with ID "+rFleaMAC1+" could not be set up");
+
+		//Connect to as much rFlea as you wish (MAXIMUM 8)
+//ChannelConnected=AntInterface.addNewChannel(false, rFleaMAC2, frequency); //open a second channel
+//if(ChannelConnected==true)
+	//AndroidInterface.showToast("rFlea with ID "+rFleaMAC2+" is set up");
+//else
+	//AndroidInterface.showToast("rFlea with ID "+rFleaMAC2+" could not be set up");
+
+
 
 var packagesReceived = 0; //counter
 
