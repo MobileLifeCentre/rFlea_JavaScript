@@ -2,7 +2,9 @@
 // GLOBAL SETTINGS
 ///////////////////////////////////////////////////////////////////////////////
 
-var rFleaMAC = 0, // enter your rFlea MAC address here if you want to pair to a specific one(e.g. 47740). Set to 0 for connecting to any in vicinity.
+var rFleaMAC1 = 59555, // enter your rFlea MAC address here if you want to pair to a specific one(e.g. 47740). Set to 0 for connecting to any in vicinity.
+	rFleaMAC2=8266, //Add as much as 8 ID you would like to connect to
+	
     frequency = 8, // use higher frequency for better response. Default value is 8, higher frequencies use more batteries
     debug = false, // outputs debug messages on the phone. Set to true if something doesn't work out
     verbose = false, // outputs even more debug messages (use with care!)
@@ -43,8 +45,12 @@ onrFleaMessage = function( rFleaData ){};
 var antConnected=false;
 
 while (antConnected==false){//try 3 times until get connection. 
-antConnected = AntInterface.addNewChannel(false, rFleaMAC, frequency); //false means we are opening a Slave master
+antConnected = AntInterface.addNewChannel(false, rFleaMAC1, frequency); //false means we are opening a Slave master
 }
+
+//Connect to as much rFlea as you wish (MAXIMUM 8)
+AntInterface.addNewChannel(false, rFleaMAC2, frequency); //open a second channel
+
 var packagesReceived = 0; //counter
 
 if (debug) AndroidInterface.showToast("Ant connected " + antConnected);
@@ -88,7 +94,7 @@ function parseRflea(data) {
 			parseInt(data[6]),
 			parseInt(data[7])
 		],
-		MAC: toHex(data[8]) + ":" +toHex(data[9]),
+		MAC: (parseInt(data[8]) << 8 | parseInt(data[9])),
 	};
 }
 
@@ -103,6 +109,11 @@ function toHex(val) {
 function rFleaSend(data0,data1,data2,data3,data4,data5,data6,data7){
 	var tx_message = toString(data0,data1,data2,data3,data4,data5,data6,data7);
 	var tx_successful = AntInterface.send(tx_message); //returns true if format is correct
+	if (true) AndroidInterface.showToast(tx_message, tx_successful);
+}
+function rFleaSend(data0,data1,data2,data3,data4,data5,data6,data7,ID){ //This is the multichannel function
+	var tx_message = toString(data0,data1,data2,data3,data4,data5,data6,data7);
+	var tx_successful = AntInterface.send(tx_message,ID); //returns true if format is correct
 	if (true) AndroidInterface.showToast(tx_message, tx_successful);
 }
 

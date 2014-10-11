@@ -13,6 +13,9 @@
 			Trying to connect…
 		</div>
 		<script type="text/javascript">
+		
+		AndroidInterface.showToast("This is the debugging mode");
+		
 		//rflea rFlea;
 		/**
 		 * onrFleaMessage Function that is called whenever new rFlea data messages are received.
@@ -25,12 +28,18 @@
 		outputData(rFleaData);
 
 		//Now is time to send our DATA. Fill each of the fields with your data. Values form 0 to 255!
-		rFleaSend(1,1,2,3,4,5,6,7); //returns true if format is correct
+		//in rFleaData.MAC you have the ID form the rFlea where this message was coming from. 
+		if (rFleaData.MAC==rFleaMAC1)
+			rFleaSend(1,1,1,1,1,1,1,1,rFleaData.MAC); //returns true if format is correct
+		else if (rFleaData.MAC==rFleaMAC2)
+			rFleaSend(2,2,2,2,2,2,2,2,rFleaData.MAC); //returns true if format is correct
+			
+			
 		};
 		
 		//Functions that writes in the html plain text the data
 		function outputData(data) {
-				var output = "Data package #" + packagesReceived + " received from rFlea #" + rFleaMAC + ": <br/>";
+				var output = "Data package #" + packagesReceived + " received from rFlea #" + data.MAC + ": <br/>";
 				for (var i = 0; i < data.message.length; i++) {
 				output += "data" + i + ": " + data.message[i] + "<br/>";
 			}
