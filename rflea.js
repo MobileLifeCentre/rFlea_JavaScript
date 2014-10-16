@@ -2,7 +2,7 @@
 // GLOBAL SETTINGS
 ///////////////////////////////////////////////////////////////////////////////
 
-var rFleaMAC1 = 59555, // enter your rFlea MAC address here if you want to pair to a specific one(e.g. 47740). Set to 0 for connecting to any in vicinity.
+var rFleaMAC1 = 0, // enter your rFlea MAC address here if you want to pair to a specific one(e.g. 47740). Set to 0 for connecting to any in vicinity.
     rFleaMAC2=8266, //Add as much as 8 ID you would like to connect to
     frequency1 = 8, // use higher frequency for better response. Default value is 8, higher frequencies use more batteries
     frequency2 = 8, // use higher frequency for better response. Default value is 8, higher frequencies use more batteries
